@@ -7,7 +7,13 @@ from lib.settings import password_check
 
 # Create your views here.
 def index(request):
-    return HttpResponse("This is a Index Page")
+    return render(request,'index.html')
+
+def superDistibuter(request):
+    return render(request,'super_distibuter.html')
+
+def login(request):
+    return render(request,'login.html')
 
 def registration(request):
     if request.method == "POST":

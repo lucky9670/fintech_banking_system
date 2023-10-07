@@ -5,6 +5,7 @@ from django.contrib import auth
 from lib.settings import password_check
 # Create your views here.
 
+# Create your views here.
 def index(request):
     return HttpResponse("This is a Index Page")
 

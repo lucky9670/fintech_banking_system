@@ -27,15 +27,15 @@ def registration(request):
             return render(request,"jobs/register.html", {"message":"Password must contains one special character like @, $,#,&"})
         user_check_obj = Account.objects.filter(email=email).count()
         if user_check_obj != 0:
-            return render(request,"jobs/register.html", {"message":'User Already Exists!'})
+            return render(request,"register.html", {"message":'User Already Exists!'})
 
         if password == cpassword:
             user = Account.objects.create_user(username=email, password=password, phone_number=phone, email=email)
             auth.login(request, user)
             return redirect(index)
         else:
-            return render(request,"jobs/register.html", {"message":"Password and confirm password Does not match"})
-    return render(request,"jobs/register.html")
+            return render(request,"register.html", {"message":"Password and confirm password Does not match"})
+    return render(request,"register.html")
 
 def login(request):
     if request.method == "POST":

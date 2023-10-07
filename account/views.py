@@ -12,9 +12,6 @@ def index(request):
 def superDistibuter(request):
     return render(request,'super_distibuter.html')
 
-def login(request):
-    return render(request,'login.html')
-
 def registration(request):
     if request.method == "POST":
         phone = request.POST.get("phonenumber")
@@ -54,10 +51,39 @@ def login(request):
             return redirect(index)  # Redirect to the user's profile page or any other desired page
         else:
             # Handle invalid login
-            return render(request, 'jobs/loginform.html', {'error_message': 'Invalid login credentials'})
-    return render(request,"jobs/loginform.html")
+            return render(request, 'login.html', {'error_message': 'Invalid login credentials'})
+    return render(request,"login.html")
 
 def logout(request):
     auth.logout(request)
     return redirect(index)
 
+def changePassword(request):
+    if request.method == "POST":
+        old_password = request.POST.get("old_password")
+        new_password = request.POST.get("new_password")
+        confirm_new_password = request.POST.get("confirm_new_password")
+        email = request.user.email
+        if len(new_password) < 4:
+            return render(request, 'login.html', {'error_message': 'enter password of minimun 4 digits'})
+
+        checkpoint = password_check(new_password)
+        if checkpoint == 1:
+            return render(request,"jobs/register.html", {"message":"Password must contain atleast one capital alphbat"})
+        if checkpoint == 2:
+            return render(request,"jobs/register.html", {"message":"Password must contain atleast one digit"})
+        if checkpoint == 3:
+            return render(request,"jobs/register.html", {"message":"Password must contains one special character like @, $,#,&"})
+        
+        if new_password != confirm_new_password:
+            return render(request,"jobs/register.html", {"message":"password and confirmpassword doesnot match"})
+        userdata = Account.objects.get(email=email)
+        if userdata.check_password(new_password):
+            return render(request,"jobs/register.html", {"message":"new password already exists"})
+        if userdata.check_password(old_password):
+            userdata.set_password(new_password)
+            userdata.save()
+            return redirect(index)
+        else:
+            return render(request,"jobs/register.html", {"message":"wrong current password"})
+    return render(request,"login.html")

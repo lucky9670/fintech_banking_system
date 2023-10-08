@@ -55,7 +55,13 @@
 
                                 <div class="mt-4">
                                     <form class="needs-validation" novalidate action="index.html">
-
+                                        <div class="mb-3">
+                                            <label for="username" class="form-label">Name <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="username" placeholder="Enter username" required>
+                                            <div class="invalid-feedback">
+                                                Please enter username
+                                            </div>
+                                        </div>
                                         <div class="mb-3">
                                             <label for="useremail" class="form-label">Email <span class="text-danger">*</span></label>
                                             <input type="email" class="form-control" id="useremail" placeholder="Enter email address" required>
@@ -63,13 +69,7 @@
                                                 Please enter email
                                             </div>
                                         </div>
-                                        {% comment %} <div class="mb-3">
-                                            <label for="username" class="form-label">Username <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="username" placeholder="Enter username" required>
-                                            <div class="invalid-feedback">
-                                                Please enter username
-                                            </div>
-                                        </div> {% endcomment %}
+                                      
                                         <div class="mb-3">
                                             <label for="username" class="form-label">Phone <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control" id="username" placeholder="Enter phone number" required>
@@ -98,6 +98,14 @@
                                                     Please confirm password
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="role">Role</label>
+                                            <select class="form-select mb-3" aria-label="Default select example" name="role">
+                                                <option selected>Select your Role </option>
+                                                <option value="1">Distributer</option>
+                                                <option value="2">Retailer</option>
+                                            </select>
                                         </div>
                                         <div class="mb-4">
                                             <p class="mb-0 fs-12 text-muted fst-italic">By registering you agree to the Velzon <a href="#" class="text-primary text-decoration-underline fst-normal fw-medium">Terms of Use</a></p>

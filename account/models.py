@@ -68,7 +68,7 @@ class UserProfile(models.Model):
     pan_card = models.CharField(max_length=50, blank=True, null=True)
     aadhar_card = models.CharField(max_length=50, blank=True, null=True)
     aadhar_card_front = models.ImageField(upload_to ='media/member/', blank=True, null=True)
-    aadhar_card_front = models.ImageField(upload_to ='media/member/', blank=True, null=True)
+    aadhar_card_back = models.ImageField(upload_to ='media/member/', blank=True, null=True)
     pan_card_pic = models.ImageField(upload_to='media/member/', blank=True, null=True)
     gstin_pic = models.ImageField(upload_to='media/member/', blank=True, null=True)
     profile_pic = models.ImageField(upload_to='media/member/', blank=True, null=True)

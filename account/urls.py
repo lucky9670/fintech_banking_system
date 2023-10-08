@@ -9,6 +9,5 @@ urlpatterns = [
     path('logout', views.logout, name = 'logout'),
     path('scheme_manager', views.SchemeManager, name = 'scheme_manager'),
     path('role_manager', views.roleManager, name = 'role_manager'),
+    path('company', views.company, name = 'company'),
 ]
-# if settings.DEBUG:
-#     urlpatterns+=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

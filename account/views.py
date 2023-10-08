@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Account, UserProfile, Role, Scheme
+from .models import Account, UserProfile, Role, Scheme, Company
 from django.contrib import auth
 from lib.settings import password_check
 # Create your views here.
@@ -128,3 +128,30 @@ def roleManager(request):
             mtype="failed"
     role_data = Role.objects.all()
     return render(request, "role.html", {"data" : role_data, "message": message, "mtype":mtype})
+
+def company(request):
+    message= ""
+    mtype=""
+    if(request.method == 'POST'):
+        try:
+            company_name = request.POST.get("company_name")
+            sort_name = request.POST.get("sort_name")
+            website = request.POST.get("website")
+            logo = request.FILES.get("image")
+            status = request.POST.get("status")
+            sender_id = request.POST.get("sender_id")
+            sms_user_id = request.POST.get("sms_user_id")
+            sms_password = request.POST.get("sms_password")
+            sms_uti = request.POST.get("sms_uti")
+            smtp_url = request.POST.get("smtp_url")
+            smtp_user_name = request.POST.get("smtp_user_name")
+            smtp_password = request.POST.get("smtp_password")
+            smtp_port = request.POST.get("smtp_port")
+            Company.objects.create(company_name = company_name, sort_name = sort_name, website = website, logo = logo, status = status, sender_id = sender_id, sms_user_id = sms_user_id, sms_password = sms_password, sms_uti = sms_uti, smtp_url = smtp_url, smtp_user_name = smtp_user_name, smtp_password = smtp_password, smtp_port = smtp_port)
+            message= "Added Successfully"
+            mtype="success"
+        except :
+            message= "Something went wrong.."
+            mtype="failed"
+    company = Company.objects.all()
+    return render(request, "company.html", {"data" : company, "message": message, "mtype":mtype})

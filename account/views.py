@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Account, UserProfile, Role
+from .models import Account, UserProfile, Role, Scheme
 from django.contrib import auth
 from lib.settings import password_check
 # Create your views here.
@@ -91,3 +91,25 @@ def changePassword(request):
         else:
             return render(request,"register.html", {"message":"wrong current password"})
     return render(request,"login.html")
+
+
+
+##  Scheme Manager
+
+def SchemeManager(request):
+    message= ""
+    mtype=""
+    if(request.method == 'POST'):
+        try:
+            name = request.POST.get("scheme_name")
+            type = request.POST.get("scheme_type")
+            status = request.POST.get("scheme_status")
+            Scheme.objects.create(name=name, type=type, status=status)
+            message= "Added Successfully"
+            mtype="success"
+        except:
+            message= "Something went wrong.."
+            mtype="failed"
+    
+    scheme_data = Scheme.objects.all()
+    return render(request, "scheme_manager.html", {"data" : scheme_data, "message": message, "mtype":mtype})

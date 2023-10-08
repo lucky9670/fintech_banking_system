@@ -42,11 +42,11 @@ class Account(AbstractUser):
         | is_active
         | date_joined
         """
-    name = models.CharField(max_length=50,blank=True,null=True)
-    email = models.EmailField(max_length=50,blank=True,null=True)
+    name = models.CharField(max_length=50)
+    email = models.EmailField(max_length=50)
     password = models.CharField(max_length=500)
-    phone = models.CharField(max_length=50,blank=True,null=True)
-    role = models.ForeignKey(Role, on_delete=models.CASCADE)
+    phone = models.CharField(max_length=50, unique=True)
+    role = models.ForeignKey(Role, on_delete=models.SET_NULL, null=True, blank=True)
     created_at = models.DateTimeField(editable=False, auto_now_add=True)
     modified_at = models.DateTimeField(editable=False, auto_now=True)
 
@@ -82,6 +82,8 @@ class UserProfile(models.Model):
     bank_ifsc = models.CharField(max_length=50, blank=True, null=True)
     app_token = models.CharField(max_length=2000, blank=True, null=True)
     old_password = models.CharField(max_length=250, blank=True, null=True)
-    scheme = models.ForeignKey(Account, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(editable=False, auto_now_add=True)
+    modified_at = models.DateTimeField(editable=False, auto_now=True)
+    user = models.OneToOneField(Account, on_delete=models.CASCADE, unique=True)
     scheme = models.ForeignKey(Scheme, blank=True, null=True, on_delete=models.CASCADE)
     company = models.ForeignKey(Company, blank=True, null=True, on_delete=models.CASCADE)

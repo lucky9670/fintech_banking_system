@@ -95,7 +95,6 @@ def changePassword(request):
 
 
 ##  Scheme Manager
-
 def SchemeManager(request):
     message= ""
     mtype=""
@@ -113,3 +112,19 @@ def SchemeManager(request):
     
     scheme_data = Scheme.objects.all()
     return render(request, "scheme_manager.html", {"data" : scheme_data, "message": message, "mtype":mtype})
+
+# Role Manager
+def roleManager(request):
+    message= ""
+    mtype=""
+    if(request.method == 'POST'):
+        try:
+            name = request.POST.get("role_name")
+            Role.objects.create(name=name)
+            message= "Added Successfully"
+            mtype="success"
+        except:
+            message= "Something went wrong.."
+            mtype="failed"
+    role_data = Role.objects.all()
+    return render(request, "role.html", {"data" : role_data, "message": message, "mtype":mtype})

@@ -87,3 +87,49 @@ class UserProfile(models.Model):
     user = models.OneToOneField(Account, on_delete=models.CASCADE, unique=True)
     scheme = models.ForeignKey(Scheme, blank=True, null=True, on_delete=models.CASCADE)
     company = models.ForeignKey(Company, blank=True, null=True, on_delete=models.CASCADE)
+
+class Provider(BaseModel):
+    name = models.CharField(max_length=250)
+    re_1 = models.CharField(max_length=20)
+    re_2 = models.CharField(max_length=200)
+    status = models.BooleanField(default=True)
+    re_3 = models.CharField(max_length=200)
+    re_4 = models.CharField(max_length=200)
+    api_id = models.CharField(max_length=200)
+    type = models.CharField(max_length=200)
+    logo = models.URLField(blank=True, null=True)
+    is_mandatory = models.BooleanField(default=False)
+
+class Circle(BaseModel):
+    state_head = models.CharField(max_length=250)
+    plan_code = models.CharField(max_length=20)
+    state_code = models.CharField(max_length=200)
+    
+
+
+class Commission(BaseModel):
+    user = models.CharField(max_length=250)
+    type = models.CharField(max_length=20)
+    scheme_id = models.CharField(max_length=200)
+    white_label = models.BooleanField()
+    super_distributor = models.CharField(max_length=200)
+    distributor = models.CharField(max_length=200)
+    retailer = models.CharField(max_length=200)
+
+class CommissionType(BaseModel):
+    name = models.CharField(max_length=250)
+    type = models.CharField(max_length=50)
+    status = models.BooleanField(default=True)
+
+
+class APIManager(BaseModel):
+    product_name = models.CharField(max_length=250)
+    sort_name = models.CharField(max_length=20)
+    url = models.CharField(max_length=200)
+    status = models.BooleanField()
+    api_key = models.CharField(max_length=200)
+    username = models.CharField(max_length=200)
+    password = models.CharField(max_length=200)
+    optional = models.CharField(max_length=200)
+    code = models.CharField(max_length=200)
+    type = models.CharField(max_length=200)

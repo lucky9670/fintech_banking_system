@@ -1,7 +1,11 @@
 from django.shortcuts import render, redirect
 from .models import Account, UserProfile, Role, Scheme, Company
+from .models import Account, UserProfile, Role, Scheme, APIManager, Provider, Commission, CommissionType
 from django.contrib import auth
 from lib.settings import password_check
+from django.http import JsonResponse
+
+from django.core.files.storage import FileSystemStorage
 # Create your views here.
 
 # Create your views here.
@@ -92,18 +96,189 @@ def changePassword(request):
             return render(request,"register.html", {"message":"wrong current password"})
     return render(request,"login.html")
 
+def WhiteLabelManager(request):
+    wdata = Account.objects.all()
+    return render(request, 'whitelabel.html', {"data":wdata})   
 
+def SuperDistributor(request):
+    wdata = Account.objects.all()
+    return render(request, 'whitelabel.html', {"data":wdata})   
+
+def Distributor(request):
+    wdata = Account.objects.all()
+    return render(request, 'whitelabel.html', {"data":wdata})   
+
+def Retailer(request):
+    wdata = Account.objects.all()
+    return render(request, 'whitelabel.html', {"data":wdata})   
 
 ##  Scheme Manager
 def SchemeManager(request):
     message= ""
     mtype=""
+    scheme_data = Scheme.objects.all()
+    provider_data = CommissionType.objects.all()
+    return render(request, "scheme_manager.html", {"data" : scheme_data,"pdata":provider_data, "message": message, "mtype":mtype})
+def AddScheme(request):
+    message= ""
+    mtype=""
+    if(request.method == 'POST'):
+        id = request.POST.get("sid")
+        print(id, type(id))
+        if(id == ''):
+            try:
+                print("Inside post")
+                name = request.POST.get("name")
+                type1 = request.POST.get("type")
+                status = request.POST.get("status")
+                Scheme.objects.create(name=name, type=type1, status=status)
+                message= "Added Successfully"
+                mtype="success"
+            except:
+                message= "Something went wrong.."
+                mtype="failed"
+        else:
+            try:
+                print("Inside edit")
+                name = request.POST.get("name")
+                type1 = request.POST.get("type")
+                status = request.POST.get("status")
+                scheme = Scheme.objects.get(id = id)
+                scheme.name = name
+                scheme.type = type1
+                scheme.status = status
+                scheme.save()
+                message= "Updated Successfully"
+                mtype="success"
+            except:
+                message= "Something went wrong.."
+                mtype="failed"
+    return JsonResponse({'mtype':mtype, 'message':message})
+def DeleteScheme(request):
+    message= ""
+    mtype=""
+    if(request.method == "POST"):
+        try:
+            id = request.POST.get('sid')
+            data = Scheme.objects.get(pk=id)
+            data.delete()
+            message= "Deleted Successfully"
+            mtype="success"
+        except:
+            message= "Something went wrong.."
+            mtype="failed"
+    return JsonResponse({'mtype':mtype, 'message':message})
+        # scheme_data = Scheme.objects.all()
+        # return render(request, "scheme_manager.html", {"data" : scheme_data, "message": message, "mtype":mtype})
+def editScheme(request):
+    message= ""
+    mtype=""
+    if(request.method == "POST"):
+        try:
+            id = request.POST.get('sid')
+            data = Scheme.objects.get(pk=id)
+            scheme_data = {"id":data.id, "name":data.name, "type":data.type, "status":data.status }
+            message= "Deleted Successfully"
+            mtype="success"
+        except:
+            message= "Something went wrong.."
+            mtype="failed"
+    return JsonResponse({'mtype':mtype, 'message':message, 'data':scheme_data})    
+
+
+## Commission type 
+
+def CommissionTypeManager(request):
+    message= ""
+    mtype=""
+    scheme_data = CommissionType.objects.all()
+    return render(request, "commission_type_manager.html", {"data" : scheme_data, "message": message, "mtype":mtype})
+def AddCommissionType(request):
+    message= ""
+    mtype=""
+    if(request.method == 'POST'):
+        id = request.POST.get("sid")
+        print(id, type(id))
+        if(id == ''):
+            try:
+                print("Inside post")
+                name = request.POST.get("name")
+                type1 = request.POST.get("type")
+                status = request.POST.get("status")
+                CommissionType.objects.create(name=name, type=type1, status=status)
+                message= "Added Successfully"
+                mtype="success"
+            except:
+                message= "Something went wrong.."
+                mtype="failed"
+        else:
+            try:
+                print("Inside edit")
+                name = request.POST.get("name")
+                type1 = request.POST.get("type")
+                status = request.POST.get("status")
+                scheme = CommissionType.objects.get(id = id)
+                scheme.name = name
+                scheme.type = type1
+                scheme.status = status
+                scheme.save()
+                message= "Updated Successfully"
+                mtype="success"
+            except:
+                message= "Something went wrong.."
+                mtype="failed"
+    return JsonResponse({'mtype':mtype, 'message':message})
+def DeleteCommssionType(request):
+    message= ""
+    mtype=""
+    if(request.method == "POST"):
+        try:
+            id = request.POST.get('sid')
+            data = CommissionType.objects.get(pk=id)
+            data.delete()
+            message= "Deleted Successfully"
+            mtype="success"
+        except:
+            message= "Something went wrong.."
+            mtype="failed"
+    return JsonResponse({'mtype':mtype, 'message':message})
+        # scheme_data = Scheme.objects.all()
+        # return render(request, "scheme_manager.html", {"data" : scheme_data, "message": message, "mtype":mtype})
+def editCommissionType(request):
+    message= ""
+    mtype=""
+    if(request.method == "POST"):
+        try:
+            id = request.POST.get('sid')
+            data = Scheme.objects.get(pk=id)
+            scheme_data = {"id":data.id, "name":data.name, "type":data.type, "status":data.status }
+            message= "Deleted Successfully"
+            mtype="success"
+        except:
+            message= "Something went wrong.."
+            mtype="failed"
+    return JsonResponse({'mtype':mtype, 'message':message, 'data':scheme_data})    
+
+
+
+## API Manager
+
+def apiManager(request):
+    message= ""
+    mtype=""
     if(request.method == 'POST'):
         try:
-            name = request.POST.get("scheme_name")
-            type = request.POST.get("scheme_type")
-            status = request.POST.get("scheme_status")
-            Scheme.objects.create(name=name, type=type, status=status)
+            name = request.POST.get("product_name")
+            sort_name = request.POST.get("sort_name")
+            url = request.POST.get("url")
+            status = request.POST.get("status")
+            api_key = request.POST.get("api_key")
+            username = request.POST.get("username")
+            password = request.POST.get("password")
+            optional = request.POST.get("optional")
+            code = request.POST.get("code")
+            type = request.POST.get("type")
+            APIManager.objects.create(product_name=name, sort_name=sort_name, url=url, status=status, api_key=api_key, username=username, password=password, optional=optional, code=code, type=type)
             message= "Added Successfully"
             mtype="success"
         except:
@@ -155,3 +330,34 @@ def company(request):
             mtype="failed"
     company = Company.objects.all()
     return render(request, "company.html", {"data" : company, "message": message, "mtype":mtype})
+    api_data = APIManager.objects.all()
+    return render(request, "api.html", {"data" : api_data, "message": message, "mtype":mtype})
+
+
+def ProviderManager(request):
+    message= ""
+    mtype=""
+    if(request.method == 'POST') and request.FILES['logo']:
+        # try:
+        name = request.POST.get("name")
+        re_1 = request.POST.get("re_1")
+        re_2 = request.POST.get("re_2")
+        re_3 = request.POST.get("re_3")
+        re_4 = request.POST.get("re_4")
+        api_id = request.POST.get("api_id")
+        type = request.POST.get("type")
+        status = request.POST.get("status")
+        logo = request.FILES['logo']
+        fss = FileSystemStorage()
+        file = fss.save(logo.name, logo)
+        file_url = fss.url(file)
+        is_mandatory = request.POST.get("is_mandatory")
+        Provider.objects.create(name=name, type=type, status=status, logo=file_url, is_mandatory=is_mandatory, api_id=api_id,re_1=re_1, re_2=re_2, re_3=re_3, re_4=re_4)
+        message= "Added Successfully"
+        mtype="success"
+        # except:
+        #     message= "Something went wrong.."
+        #     mtype="failed"
+    api_data = APIManager.objects.all()
+    scheme_data = Provider.objects.all()
+    return render(request, "provider.html", {"data" : scheme_data,"apidata":api_data, "message": message, "mtype":mtype})

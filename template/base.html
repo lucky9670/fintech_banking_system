@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
+    <link href="{% static 'assets/css/icons.min.css '%}" rel="stylesheet" type="text/css" />
     <!-- App favicon -->
     <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico'%}">
     <link href="{% static 'assets/libs/sweetalert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css" />
@@ -34,6 +35,7 @@
     <link href="{% static 'assets/css/app.min.css' %}" rel="stylesheet" type="text/css" />
     <!-- custom Css-->
     <link href="{% static 'assets/css/custom.min.css' %}" rel="stylesheet" type="text/css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 </head>
 <body>
@@ -922,6 +924,15 @@
                             <li class="nav-item">
                                 <a href="{% url "scheme_manager" %}" class="nav-link" data-key="t-calendar"> Scheme Manager </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{% url "api_manager" %}" class="nav-link" data-key="t-calendar"> API Manager </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{% url "provider_manager" %}" class="nav-link" data-key="t-calendar"> Provider Manager </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{% url "commission_type_manager" %}" class="nav-link" data-key="t-calendar"> Commission Type Manager </a>
+                            </li>
                             
                         </ul>
                     </div>
@@ -956,21 +967,21 @@
 
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarLayouts" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
-                        <i class="ri-layout-3-line"></i> <span data-key="t-layouts">Layouts</span>
+                        <i class="ri-layout-3-line"></i> <span data-key="t-layouts">Mmeber Management</span>
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarLayouts">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="layouts-horizontal.html" target="_blank" class="nav-link" data-key="t-horizontal">Horizontal</a>
+                                <a href="{% url "whitelabel_management" %}" target="_blank" class="nav-link" data-key="t-horizontal">White Label</a>
                             </li>
                             <li class="nav-item">
-                                <a href="layouts-detached.html" target="_blank" class="nav-link" data-key="t-detached">Detached</a>
+                                <a href="{% url "super_dist_management" %}" target="_blank" class="nav-link" data-key="t-detached">Super Distributor</a>
                             </li>
                             <li class="nav-item">
-                                <a href="layouts-two-column.html" target="_blank" class="nav-link" data-key="t-two-column">Two Column</a>
+                                <a href="{% url "distributor_management" %}" target="_blank" class="nav-link" data-key="t-two-column">Distributor</a>
                             </li>
                             <li class="nav-item">
-                                <a href="layouts-vertical-hovered.html" target="_blank" class="nav-link" data-key="t-hovered">Hovered</a>
+                                <a href="{% url "retailer_management" %}" target="_blank" class="nav-link" data-key="t-hovered">Agent</a>
                             </li>
                         </ul>
                     </div>

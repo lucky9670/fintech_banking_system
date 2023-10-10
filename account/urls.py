@@ -19,8 +19,8 @@ urlpatterns = [
     path('delete_commission_type', views.DeleteCommssionType, name = 'delete_commission_type'),
     path('edit_commission_type', views.editCommissionType, name = 'edit_commission_type'),
     path('add_commission_type', views.AddCommissionType, name = 'add_commission_type'),
-    path('whitelabel_management', views.AddScheme, name = 'whitelabel_management'),
-    path('retailer_management', views.AddScheme, name = 'retailer_management'),
-    path('super_dist_management', views.AddScheme, name = 'super_dist_management'),
-    path('distributor_management', views.AddScheme, name = 'distributor_management'),
+    path('whitelabel_client', views.whitelabel, name = 'whitelabel_client'),
+    path('super_distributer', views.superDistributer, name = 'super_distributer'),
+    path('distributer', views.Distributer, name = 'distributer'),
+    path('retailer', views.Retailer, name = 'retailer'),
 ]

@@ -96,22 +96,6 @@ def changePassword(request):
             return render(request,"register.html", {"message":"wrong current password"})
     return render(request,"login.html")
 
-def WhiteLabelManager(request):
-    wdata = Account.objects.all()
-    return render(request, 'whitelabel.html', {"data":wdata})   
-
-def SuperDistributor(request):
-    wdata = Account.objects.all()
-    return render(request, 'whitelabel.html', {"data":wdata})   
-
-def Distributor(request):
-    wdata = Account.objects.all()
-    return render(request, 'whitelabel.html', {"data":wdata})   
-
-def Retailer(request):
-    wdata = Account.objects.all()
-    return render(request, 'whitelabel.html', {"data":wdata})   
-
 ##  Scheme Manager
 def SchemeManager(request):
     message= ""
@@ -361,3 +345,23 @@ def ProviderManager(request):
     api_data = APIManager.objects.all()
     scheme_data = Provider.objects.all()
     return render(request, "provider.html", {"data" : scheme_data,"apidata":api_data, "message": message, "mtype":mtype})
+
+def whitelabel(request):
+    role = Role.objects.get(name="White Label")
+    data = Account.objects.filter(role = role)
+    return render(request, "whitelabel.html", {"data" : data, "name" : "White Label"})
+
+def superDistributer(request):
+    role = Role.objects.get(name="Super Distributer")
+    data = Account.objects.filter(role = role)
+    return render(request, "whitelabel.html", {"data" : data, "name" : "Super Distributer"})
+
+def Distributer(request):
+    role = Role.objects.get(name="Distributer")
+    data = Account.objects.filter(role = role)
+    return render(request, "whitelabel.html", {"data" : data, "name" : "Distributer"})
+
+def Retailer(request):
+    role = Role.objects.get(name="Retailer")
+    data = Account.objects.filter(role = role)
+    return render(request, 'whitelabel.html', {"data":data, "name" : "Retailer"}) 

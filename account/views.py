@@ -365,3 +365,7 @@ def Retailer(request):
     role = Role.objects.get(name="Retailer")
     data = Account.objects.filter(role = role)
     return render(request, 'whitelabel.html', {"data":data, "name" : "Retailer"}) 
+
+
+def Dashboard(request):
+    return render(request,'dashboard.html')

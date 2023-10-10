@@ -23,4 +23,5 @@ urlpatterns = [
     path('super_distributer', views.superDistributer, name = 'super_distributer'),
     path('distributer', views.Distributer, name = 'distributer'),
     path('retailer', views.Retailer, name = 'retailer'),
+    path('dashboard', views.Dashboard, name = 'dashboard')
 ]

@@ -99,23 +99,31 @@ def changePassword(request):
             return render(request,"register.html", {"message":"wrong current password"})
     return render(request,"login.html")
 
-def WhiteLabelManager(request):
-    wdata = Account.objects.all()
-    return render(request, 'whitelabel.html', {"data":wdata})   
+@login_required(login_url='login')
+def whitelabel(request):
+    role = Role.objects.get(name="White Label")
+    data = Account.objects.filter(role = role)
+    return render(request, "whitelabel.html", {"data" : data, "name" : "White Label"})
 
-def SuperDistributor(request):
-    wdata = Account.objects.all()
-    return render(request, 'whitelabel.html', {"data":wdata})   
+@login_required(login_url='login')
+def superDistributer(request):
+    role = Role.objects.get(name="Super Distributer")
+    data = Account.objects.filter(role = role)
+    return render(request, "whitelabel.html", {"data" : data, "name" : "Super Distributer"})
 
-def Distributor(request):
-    wdata = Account.objects.all()
-    return render(request, 'whitelabel.html', {"data":wdata})   
+@login_required(login_url='login')
+def Distributer(request):
+    role = Role.objects.get(name="Distributer")
+    data = Account.objects.filter(role = role)
+    return render(request, "whitelabel.html", {"data" : data, "name" : "Distributer"})
 
+@login_required(login_url='login')
 def Retailer(request):
-    wdata = Account.objects.all()
-    return render(request, 'whitelabel.html', {"data":wdata})   
+    role = Role.objects.get(name="Retailer")
+    data = Account.objects.filter(role = role)
+    return render(request, 'whitelabel.html', {"data":data, "name" : "Retailer"}) 
 
-##  Scheme Manager
+# Scheme Manager
 @login_required(login_url='login')
 def SchemeManager(request):
     message= ""
@@ -125,16 +133,14 @@ def SchemeManager(request):
     com_data = CommissionType.objects.all()
     return render(request, "scheme_manager.html", {"data" : scheme_data, "pdata":com_data, "message": message, "mtype":mtype})
 
-
+@login_required(login_url='login')
 def GetProviderDataBYID(request):
     data = []
     if(request.method == "POST"):
         com_id = request.POST.get("com_id")
         commission = CommissionType.objects.get(id=com_id)
         print(commission)
-    provider_data = Provider.objects.filter(com_type= commission)
-    
-    
+    provider_data = Provider.objects.filter(com_type= commission) 
     for state in provider_data:
         commission = Commission.objects.filter(operator_id= state.id)
         if commission.count() >= 1:
@@ -151,10 +157,8 @@ def AddScheme(request):
     mtype=""
     if(request.method == 'POST'):
         id = request.POST.get("sid")
-        print(id, type(id))
         if(id == ''):
             try:
-                print("Inside post")
                 name = request.POST.get("name")
                 type1 = request.POST.get("type")
                 status = request.POST.get("status")
@@ -166,7 +170,6 @@ def AddScheme(request):
                 mtype="failed"
         else:
             try:
-                print("Inside edit")
                 name = request.POST.get("name")
                 type1 = request.POST.get("type")
                 status = request.POST.get("status")
@@ -406,7 +409,7 @@ def ProviderManager(request):
     scheme_data = Provider.objects.all()
     return render(request, "provider.html", {"data" : scheme_data,"apidata":api_data,"com_data":com_data, "message": message, "mtype":mtype})
 
-
+@login_required(login_url='login')
 def AddCommission(request):
     mtype = ""
     message = ""
@@ -433,6 +436,7 @@ def AddCommission(request):
         print(ids, types, whitelabel, super_dist, distributor, retailer)        
     return JsonResponse({'mtype':mtype, 'message':message})
 
+@login_required(login_url='login')
 def GetCommissionBySchemeAndCType(request):
     if(request.method == "POST"):
         com_type_id = request.POST.get('com_id')
@@ -445,13 +449,14 @@ def GetCommissionBySchemeAndCType(request):
             cdata.append(com_data)
     return JsonResponse({"data":cdata})           
 
-
+@login_required(login_url='login')
 def ProfileManager(request):
     user = Account.objects.get(id= 2)
     # user_profile = UserProfile.objects.get(user=user)
     return render(request, 'profile.html', {"data":user}) 
 
 ## change password 
+@login_required(login_url='login')
 def ChangePassword(request):
     mtype =""
     message=""
@@ -468,13 +473,12 @@ def ChangePassword(request):
         message="Something went wrong!...."
     return JsonResponse({"mtype":mtype, "message":message})
 
-
-
-
 ## mobile recharge process
+@login_required(login_url='login')
 def MobileRecharge(request):
     return render(request, "recharge.html")
 
+@login_required(login_url='login')
 def MobileRechargeRequest(request):
     if(request.method == "POST"):
         # import pdb; pdb.set_trace()
@@ -489,7 +493,7 @@ def MobileRechargeRequest(request):
     RechargeServiceType(arguments)
     return JsonResponse({"message":"request submitted successfully"})
 
-
+@login_required(login_url='login')
 def RechargeServiceType(argument):
     match argument["api_code"]:
         case "recharge1":
@@ -517,7 +521,3 @@ def RechargeServiceType(argument):
             return api_url
         case default:
             return "something went wrong"
-  
- 
-# head = RechargeServiceType(2)
-# print(head) 

@@ -1,0 +1,9 @@
+.clockable{
+    cursor: pointer;
+}
+.bg-teal-300{
+    background-color: aqua;
+}
+.content-group{
+    border: 2px solid red;
+}

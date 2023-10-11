@@ -62,6 +62,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    
                                     {% for item in data %}
                                     <tr id="2">
                                         <td>{{ forloop.counter }}</td>
@@ -145,6 +146,7 @@
     <!-- Static Backdrop -->
     <div class="modal fade bs-example-modal-xl" id="bs-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
+            <form id="form">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#607d8b;height: 60px">
                     <h5 class="modal-title" id="myLargeModalLabel"
@@ -156,214 +158,34 @@
                    
                 </div> -->
                 <!-- Bordered Tables -->
-                <table class="table table-bordered table-nowrap">
+                <table id="commission-data" class="table table-bordered table-nowrap">
                     <thead>
                         <tr>
                             <th scope="col" style="color:#607d8b">Operator</th>
                             <th scope="col" style="color:#607d8b">Commission Type</th>
                             <th scope="col" style="color:#607d8b">Whitelable</th>
-                            <th scope="col" style="color:#607d8b">State Head</th>
-                            <th scope="col" style="color:#607d8b">Master Distributor</th>
+                            <th scope="col" style="color:#607d8b">Super Distributor</th>
                             <th scope="col" style="color:#607d8b">Distributor</th>
                             <th scope="col" style="color:#607d8b">Retailer</th>
 
                         </tr>
 
                     </thead>
-
                     <tbody>
 
-                        <tr>
-                            <th scope="row" style="color:#607d8b">
-                                VODAFONE
-                            </th>
-
-                            <td class="p-t-0 p-b-0">
-                                <select class="form-select sl" aria-label=".form-select-lg example">
-                                    <option value="">Select Type</option>
-                                    <option value="percent">Percent (%)</option>
-                                    <option value="flat">Flat (Rs)</option>
-                                </select>
-                            </td>
-                            <td>
-                                <input type="password" class="form-control" id="basiInput" placeholder="Enter Value">
-                            </td>
-                            <td>
-                                <input type="password" class="form-control" id="basiInput" placeholder="Enter Value">
-                            </td>
-                            <td>
-                                <input type="password" class="form-control" id="basiInput" placeholder="Enter Value">
-                            </td>
-                            <td>
-                                <input type="password" class="form-control" id="basiInput" placeholder="Enter Value">
-                            </td>
-                            <td>
-                                <input type="password" class="form-control" id="basiInput" placeholder="Enter Value">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row" style="color:#607d8b">BSNL</th>
-                            <td class="p-t-0 p-b-0">
-                                <select class="form-select sl" aria-label=".form-select-lg example">
-                                    <option value="">Select Type</option>
-                                    <option value="percent">Percent (%)</option>
-                                    <option value="flat">Flat (Rs)</option>
-                                </select>
-                            </td>
-                            <td>
-                                <input type="password" class="form-control" id="basiInput" placeholder="Enter Value">
-                            </td>                                 
-                            <td>
-                                <input type="password" class="form-control" id="basiInput" placeholder="Enter Value">
-                            </td>
-                            <td>
-                                <input type="password" class="form-control" id="basiInput" placeholder="Enter Value">
-                            </td>
-                            <td>
-                                <input type="password" class="form-control" id="basiInput" placeholder="Enter Value">
-                            </td>
-                            <td>
-                                <input type="password" class="form-control" id="basiInput" placeholder="Enter Value">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row" style="color:#607d8b">BSNL<br> SPECIAL</th>
-                            <td class="p-t-0 p-b-0">
-                                <select class="form-select sl" aria-label=".form-select-lg example">
-                                    <option value="">Select Type</option>
-                                    <option value="percent">Percent (%)</option>
-                                    <option value="flat">Flat (Rs)</option>
-                                </select>
-                            </td>
-                            <td>
-                                <input type="password" class="form-control" id="basiInput" placeholder="Enter Value">
-                            </td>                             
-                            <td>
-                                <input type="password" class="form-control" id="basiInput" placeholder="Enter Value">
-                            </td>
-                            <td>
-                                <input type="password" class="form-control" id="basiInput" placeholder="Enter Value">
-                            </td>
-                            <td>
-                                <input type="password" class="form-control" id="basiInput" placeholder="Enter Value">
-                            </td>
-                            <td>
-                                <input type="password" class="form-control" id="basiInput" placeholder="Enter Value">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row" style="color:#607d8b">JIO LIVE</th>
-                            <td class="p-t-0 p-b-0">
-                                <select class="form-select sl" aria-label=".form-select-lg example">
-                                    <option value="">Select Type</option>
-                                    <option value="percent">Percent (%)</option>
-                                    <option value="flat">Flat (Rs)</option>
-                                </select>
-                            </td>
-                            <td>
-                                <input type="password" class="form-control" id="basiInput" placeholder="Enter Value">
-                            </td>                             
-                            <td>
-                                <input type="password" class="form-control" id="basiInput" placeholder="Enter Value">
-                            </td>
-                            <td>
-                                <input type="password" class="form-control" id="basiInput" placeholder="Enter Value">
-                            </td>
-                            <td>
-                                <input type="password" class="form-control" id="basiInput" placeholder="Enter Value">
-                            </td>
-                            <td>
-                                <input type="password" class="form-control" id="basiInput" placeholder="Enter Value">
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th scope="row" style="color:#607d8b">JIO</th>
-                            <td class="p-t-0 p-b-0">
-                                <select class="form-select sl" aria-label=".form-select-lg example">
-                                    <option value="">Select Type</option>
-                                    <option value="percent">Percent (%)</option>
-                                    <option value="flat">Flat (Rs)</option>
-                                </select>
-                            </td>
-                            <td>
-                                <input type="password" class="form-control" id="basiInput" placeholder="Enter Value">
-                            </td>                                         
-                            <td>
-                                <input type="password" class="form-control" id="basiInput" placeholder="Enter Value">
-                            </td>
-                            <td>
-                                <input type="password" class="form-control" id="basiInput" placeholder="Enter Value">
-                            </td>
-                            <td>
-                                <input type="password" class="form-control" id="basiInput" placeholder="Enter Value">
-                            </td>
-                            <td>
-                                <input type="password" class="form-control" id="basiInput" placeholder="Enter Value">
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th scope="row" style="color:#607d8b">IDEA</th>
-                            <td class="p-t-0 p-b-0">
-                                <select class="form-select sl" aria-label=".form-select-lg example">
-                                    <option value="">Select Type</option>
-                                    <option value="percent">Percent (%)</option>
-                                    <option value="flat">Flat (Rs)</option>
-                                </select>
-                            </td>
-                            <td>
-                                <input type="password" class="form-control" id="basiInput" placeholder="Enter Value">
-                            </td>                                      
-                            <td>
-                                <input type="password" class="form-control" id="basiInput" placeholder="Enter Value">
-                            </td>
-                            <td>
-                                <input type="password" class="form-control" id="basiInput" placeholder="Enter Value">
-                            </td>
-                            <td>
-                                <input type="password" class="form-control" id="basiInput" placeholder="Enter Value">
-                            </td>
-                            <td>
-                                <input type="password" class="form-control" id="basiInput" placeholder="Enter Value">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row" style="color:#607d8b">AIRTEL</th>
-                            <td class="p-t-0 p-b-0">
-                                <select class="form-select sl" aria-label=".form-select-lg example">
-                                    <option value="">Select Type</option>
-                                    <option value="percent">Percent (%)</option>
-                                    <option value="flat">Flat (Rs)</option>
-                                </select>
-                            </td>
-                            <td>
-                                <input type="password" class="form-control" id="basiInput" placeholder="Enter Value">
-                            </td>                                          
-                            <td>
-                                <input type="password" class="form-control" id="basiInput" placeholder="Enter Value">
-                            </td>
-                            <td>
-                                <input type="password" class="form-control" id="basiInput" placeholder="Enter Value">
-                            </td>
-                            <td>
-                                <input type="password" class="form-control" id="basiInput" placeholder="Enter Value">
-                            </td>
-                            <td>
-                                <input type="password" class="form-control" id="basiInput" placeholder="Enter Value">
-                            </td>
-                        </tr>
-
-
-                    </tbody>
+                        
+ 
+                     </tbody>
+                    
                 </table>
                 <div class="modal-footer">
                     <a href="javascript:void(0);" class="btn btn-link link-success fw-medium but" 
                         data-bs-dismiss="modal"> Close</a>
-                    <button type="button" class="btn"
+                    <button type="button" class="btn" id="add-commission"
                         style="background-color: #607d8b;color: white;">submit</button>
                 </div>
             </div>
+        </form>
         </div><!-- /.modal-dialog -->
     </div>
 <!-- staticBackdrop Modal -->
@@ -499,6 +321,7 @@
 </div>
 <script>
     let scheme_id;
+    let provider_id;
 // open commission modal
 $("tbody").on('click','.btn-com',function(){
     scheme_id = $(this).attr('data-catid');
@@ -508,12 +331,132 @@ $("tbody").on('click','.btn-com',function(){
    
 });
 $("li").on('click','#commission-btn',function(){
-    let provider_id = $(this).attr('data-pdtid');
+    $('#commission-data').empty();  
+    provider_id = $(this).attr('data-pdtid');
     console.log(provider_id);
     console.log(scheme_id);
-    $('#bs-example-modal-xl').modal('show');
-})
+    
+    let csr = $("input[name=csrfmiddlewaretoken").val();
+    mydata = {com_id:provider_id,  csrfmiddlewaretoken:csr}
 
+    
+  
+
+    $.ajax({
+        url:"{% url 'get_provider_by_id' %}",
+        method:"POST",
+        data:mydata,
+        success:function(json){
+            $('#bs-example-modal-xl').modal('show');
+            console.log(json);
+            // var tr; 
+            
+        //Append each row to html table  
+        // data = JSON.parse(json);
+        let i =0;
+            json.pdata.forEach(element => {
+            
+                // tr = $('<tr/>');  
+                // tr.append("<td>" + json[i].id + "</td>");  
+                // tr.append("<td>" + json[i].name + "</td>");  
+                // tr.append("<td>" + json[i].id + "</td>");  
+                // tr.append("<td>" + json[i].name + "</td>");  
+                $('#commission-data').append('<tr>' + '<th>' + element.name + '</th>' + "<td class='p-t-0 p-b-0'>" + 
+                             "<select class='form-select sl' aria-label='.form-select-lg example'  name='type1'> <option value='0'>Select Type</option> <option value='percent'>Percent</option><option value='flat'>Flat</option></select>"
+                          + '</td>' + '<td>' + "<input type='text' value='"+ element.whitelabel+"' class='form-control' id='whitelabel_{{element.id}}' name='whitelabel' placeholder='Enter Value'>" + '</td>' + '<td>' + "<input type='text' value='"+ element.super_dist+"' class='form-control' id='super_dist_{{element.id}}' name='super_dist' placeholder='Enter Value'>" + '</td>' + '<td>' + "<input type='text' class='form-control' value='"+ element.distributor+"' id='distributor_{{element.id}}' name='distributor' placeholder='Enter Value'>" + '</td>' + '<td>' + "<input type='text' value='"+ element.retailer+"' class='form-control' id='retailer_{{element.id}}' name='retailer' placeholder='Enter Value'>" + "<input type='hidden' name='id' value='"+element.id+"'>" + '</td>' + '</tr>');  
+           i =i++;
+            })
+            // data.data.forEach(element => {
+            //     // debugger
+            //     console.log(element);
+            //     // $("#id_").val(data.data.id);
+            //     $("#whitelabel_"+element.id).val(element.white_label);
+            //     // $("#scheme_type").val(data.data.type);
+            // });
+            $('#bs-example-modal-xl').modal('show');
+           },
+    })
+});
+
+
+
+
+
+
+
+
+
+
+$("#add-commission").click(function(e){
+    let ids  = [];
+    let type  = [];
+    let whitelabel  = [];
+    let super_dist  = [];
+    let distributor  = [];
+    let retailer = [];
+
+    var fieldMap = {
+        'id': ids,
+        'type1': type,
+        'whitelabel': whitelabel,
+        'super_dist': super_dist,
+        'distributor': distributor,
+        'retailer': retailer
+    };
+
+    // Iterate over the fields and extract data
+    $.each(fieldMap, function(fieldName, fieldArray) {
+        $('input[name="' + fieldName + '"], select[name="' + fieldName + '"]').each(function (index, member) {
+            var value = $(member).val();
+            fieldArray.push(value);
+        });
+        console.log(fieldName, fieldArray);
+    });
+
+    
+    let csr = $("input[name=csrfmiddlewaretoken").val();
+    // form_data=  JSON.stringify(form_data);
+    mydata = {
+        com_id:provider_id,
+        scheme_id:scheme_id,
+        ids : ids.toString(), 
+        type : type.toString(), 
+        whitelabel : whitelabel.toString(), 
+        super_dist : super_dist.toString(), 
+        distributor : distributor.toString(), 
+        retailer : retailer.toString(), 
+        csrfmiddlewaretoken:csr
+    }
+    console.log(mydata);
+    $.ajax({
+        url:"{% url 'add_commission' %}",
+        method:"POST",
+        data:mydata,
+        success:function(data){
+            $('#bs-example-modal-xl').modal('hide');
+            if(data.mtype == 'success'){
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Your work has been saved',
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
+$(this).closest("tr").fadeOut();
+            }
+            else{
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'failed',
+                    title: 'Something went wrong',
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
+            }
+        }
+    });
+
+});
 
 
     
@@ -525,7 +468,7 @@ $("#add-btn").click(function(){
 // add data
 $("#btn-save").click(function(){
     let sid = $("#scheme_id").val();
-    console
+    
     let name = $("#scheme_name").val();
     let type = $("#scheme_type").val();
     let status = $("#scheme_status").val();

@@ -1,13 +1,11 @@
 from django.shortcuts import render, redirect
-from .models import Account, UserProfile, Role, Scheme, Company
-from .models import Account, UserProfile, Role, Scheme, APIManager, Provider, Commission, CommissionType
+from .models import Account, UserProfile, Role, Scheme, Company, APIManager, Provider, Commission, CommissionType
 from django.contrib import auth
 from lib.settings import password_check
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
-
 from django.core.files.storage import FileSystemStorage
-# Create your views here.
+import uuid, requests
 
 # Create your views here.
 @login_required(login_url='login')
@@ -101,14 +99,51 @@ def changePassword(request):
             return render(request,"register.html", {"message":"wrong current password"})
     return render(request,"login.html")
 
+def WhiteLabelManager(request):
+    wdata = Account.objects.all()
+    return render(request, 'whitelabel.html', {"data":wdata})   
+
+def SuperDistributor(request):
+    wdata = Account.objects.all()
+    return render(request, 'whitelabel.html', {"data":wdata})   
+
+def Distributor(request):
+    wdata = Account.objects.all()
+    return render(request, 'whitelabel.html', {"data":wdata})   
+
+def Retailer(request):
+    wdata = Account.objects.all()
+    return render(request, 'whitelabel.html', {"data":wdata})   
+
 ##  Scheme Manager
 @login_required(login_url='login')
 def SchemeManager(request):
     message= ""
     mtype=""
     scheme_data = Scheme.objects.all()
-    provider_data = CommissionType.objects.all()
-    return render(request, "scheme_manager.html", {"data" : scheme_data,"pdata":provider_data, "message": message, "mtype":mtype})
+    
+    com_data = CommissionType.objects.all()
+    return render(request, "scheme_manager.html", {"data" : scheme_data, "pdata":com_data, "message": message, "mtype":mtype})
+
+
+def GetProviderDataBYID(request):
+    data = []
+    if(request.method == "POST"):
+        com_id = request.POST.get("com_id")
+        commission = CommissionType.objects.get(id=com_id)
+        print(commission)
+    provider_data = Provider.objects.filter(com_type= commission)
+    
+    
+    for state in provider_data:
+        commission = Commission.objects.filter(operator_id= state.id)
+        if commission.count() >= 1:
+            for cdata in commission:
+                my_data = {"name":state.name, "id":state.id, "whitelabel":cdata.white_label, "super_dist":cdata.super_distributor, "distributor":cdata.distributor, "retailer":cdata.retailer, "type":cdata.type}
+        else:
+            my_data = {"name":state.name, "id":state.id, "whitelabel":0.0, "super_dist":0.0, "distributor":0.0, "retailer":0.0, "type":0.0}   
+        data.append(my_data)
+    return JsonResponse({"pdata":data})
 
 @login_required(login_url='login')
 def AddScheme(request):
@@ -287,8 +322,8 @@ def apiManager(request):
             message= "Something went wrong.."
             mtype="failed"
     
-    scheme_data = Scheme.objects.all()
-    return render(request, "scheme_manager.html", {"data" : scheme_data, "message": message, "mtype":mtype})
+    scheme_data = APIManager.objects.all()
+    return render(request, "api.html", {"data" : scheme_data, "message": message, "mtype":mtype})
 
 # Role Manager
 @login_required(login_url='login')
@@ -355,37 +390,134 @@ def ProviderManager(request):
         fss = FileSystemStorage()
         file = fss.save(logo.name, logo)
         file_url = fss.url(file)
-        is_mandatory = request.POST.get("is_mandatory")
-        Provider.objects.create(name=name, type=type, status=status, logo=file_url, is_mandatory=is_mandatory, api_id=api_id,re_1=re_1, re_2=re_2, re_3=re_3, re_4=re_4)
+        com_type = request.POST.get("com_type")
+        commission = CommissionType.objects.get(id=com_type)
+        api = APIManager.objects.get(id=api_id)
+        is_mandatory = True
+        Provider.objects.create(name=name, type=type,com_type=commission, status=status, logo=file_url, is_mandatory=is_mandatory, api_id=api,re_1=re_1, re_2=re_2, re_3=re_3, re_4=re_4)
         message= "Added Successfully"
         mtype="success"
         # except:
         #     message= "Something went wrong.."
         #     mtype="failed"
     api_data = APIManager.objects.all()
+    com_data = CommissionType.objects.all()
+
     scheme_data = Provider.objects.all()
-    return render(request, "provider.html", {"data" : scheme_data,"apidata":api_data, "message": message, "mtype":mtype})
+    return render(request, "provider.html", {"data" : scheme_data,"apidata":api_data,"com_data":com_data, "message": message, "mtype":mtype})
 
-@login_required(login_url='login')
-def whitelabel(request):
-    role = Role.objects.get(name="White Label")
-    data = Account.objects.filter(role = role)
-    return render(request, "whitelabel.html", {"data" : data, "name" : "White Label"})
 
-@login_required(login_url='login')
-def superDistributer(request):
-    role = Role.objects.get(name="Super Distributer")
-    data = Account.objects.filter(role = role)
-    return render(request, "whitelabel.html", {"data" : data, "name" : "Super Distributer"})
+def AddCommission(request):
+    mtype = ""
+    message = ""
+    if(request.method == 'POST'):
+        com_type_id = request.POST.get("com_id")
+        scheme_id = request.POST.get("scheme_id")
+        ids = request.POST.get("ids")
+        types = request.POST.get("type")
+        whitelabel = request.POST.get("whitelabel")
+        super_dist = request.POST.get("super_dist")
+        distributor = request.POST.get("distributor")
+        retailer = request.POST.get("retailer")
+        commission = CommissionType.objects.get(id=com_type_id)
+        scheme = Scheme.objects.get(id=scheme_id)
+        
+        for id, type, wl, sd, dn, rt in zip(ids.split(','), types.split(','), whitelabel.split(','), super_dist.split(','), distributor.split(','), retailer.split(',')):
+            print(id, type, wl, sd, dn, rt)
+            operator = Provider.objects.get(id=id)
+            Commission.objects.create(com_type_id=commission,operator_id=operator, scheme_id=scheme, type=type,  white_label=wl, super_distributor=sd, distributor=dn, retailer=rt)
+            message= "Added Successfully"
+            mtype="success"
+            # pass
+        # data = parse_qs(form_data, output)
+        print(ids, types, whitelabel, super_dist, distributor, retailer)        
+    return JsonResponse({'mtype':mtype, 'message':message})
 
-@login_required(login_url='login')
-def Distributer(request):
-    role = Role.objects.get(name="Distributer")
-    data = Account.objects.filter(role = role)
-    return render(request, "whitelabel.html", {"data" : data, "name" : "Distributer"})
+def GetCommissionBySchemeAndCType(request):
+    if(request.method == "POST"):
+        com_type_id = request.POST.get('com_id')
+        # scheme_id = request.POST.get('scheme_id')
+        comm_data = Commission.objects.all()
+        print(comm_data)
+        cdata =[]
+        for data in comm_data:
+            com_data = { "com_type_id":data.com_type_id,  "type":data.type, "white_label":data.white_label, "super_distributor":data.super_distributor, "distributor":data.distributor, "retailer":data.retailer }
+            cdata.append(com_data)
+    return JsonResponse({"data":cdata})           
 
-@login_required(login_url='login')
-def Retailer(request):
-    role = Role.objects.get(name="Retailer")
-    data = Account.objects.filter(role = role)
-    return render(request, 'whitelabel.html', {"data":data, "name" : "Retailer"}) 
+
+def ProfileManager(request):
+    user = Account.objects.get(id= 2)
+    # user_profile = UserProfile.objects.get(user=user)
+    return render(request, 'profile.html', {"data":user}) 
+
+## change password 
+def ChangePassword(request):
+    mtype =""
+    message=""
+    try:
+        if(request.method == "POST"):
+            password = request.POST.get("password")
+            user = Account.objects.get(id=2)
+            user.password = password
+            user.save()
+            mtype="success"
+            message="Password Changes Successfully"
+    except:
+        mtype="failed"
+        message="Something went wrong!...."
+    return JsonResponse({"mtype":mtype, "message":message})
+
+
+
+
+## mobile recharge process
+def MobileRecharge(request):
+    return render(request, "recharge.html")
+
+def MobileRechargeRequest(request):
+    if(request.method == "POST"):
+        # import pdb; pdb.set_trace()
+        operator = request.POST.get("operator")
+        number = request.POST.get("number")
+        amount = request.POST.get("amount")
+        pin = request.POST.get("pin")
+        user = request.POST.get("pin")
+        pdata = Provider.objects.get(name=operator)
+        api_data = APIManager.objects.get(id=1)
+        arguments = {"username": api_data.username,"token": api_data.password, "api_code":api_data.type, "api_url":api_data.url, "number":number, "amount":amount, "opcode":pdata.re_1 }
+    RechargeServiceType(arguments)
+    return JsonResponse({"message":"request submitted successfully"})
+
+
+def RechargeServiceType(argument):
+    match argument["api_code"]:
+        case "recharge1":
+            transection_number = uuid.uuid4()
+            api_url = "{}/recharge/api?username={}&token={}&opcode={}&number={}&amount={}&orderid={}&format=json".format(argument["api_url"],argument["username"],argument["token"], argument["opcode"], argument["number"], argument["amount"], transection_number )
+            response = requests.get(f"{api_url}")
+            print(api_url)
+            if(response.status_code == 200):
+                print(response.json())
+                return response
+            else:
+                return 400
+            # return api_url
+        case "recharge2":
+            transection_number = uuid.uuid4()
+            api_url = "/recharge/api?username={}&token={}&opcode={}&number={}&amount={}&orderid={}&format=json".format(argument["username"],argument["token"], argument["opcode"], argument["number"], argument["amount"], transection_number )
+            return api_url
+        case "recharge3":
+            transection_number = uuid.uuid4()
+            api_url = "/recharge/api?username={}&token={}&opcode={}&number={}&amount={}&orderid={}&format=json".format(argument["username"],argument["token"], argument["opcode"], argument["number"], argument["amount"], transection_number )
+            return api_url
+        case "recharge4":
+            transection_number = uuid.uuid4()
+            api_url = "/recharge/api?username={}&token={}&opcode={}&number={}&amount={}&orderid={}&format=json".format(argument["username"],argument["token"], argument["opcode"], argument["number"], argument["amount"], transection_number )
+            return api_url
+        case default:
+            return "something went wrong"
+  
+ 
+# head = RechargeServiceType(2)
+# print(head) 

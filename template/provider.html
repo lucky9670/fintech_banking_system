@@ -160,7 +160,7 @@
                             <label for="validationCustom02" class="form-label">API ID</label>
                             <select class="form-select " aria-label="Default select example" name="api_id" id="validationCustom02"  >
                                 {% for category in apidata  %}
-        <option value="{{ category }}">{{ category.product_name }}</option>
+        <option value="{{ category.id }}">{{ category.product_name }}</option>
       {% endfor %}
     </select>
                             <div class="valid-feedback">
@@ -178,9 +178,12 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <label for="validationCustom02" class="form-label">Is Mandatory</label>
-                            <input type="text" class="form-control" id="validationCustom02"  required name="is_mandatory">
-                            <div class="valid-feedback">
+                            <label for="validationCustom02" class="form-label">Commission Type</label>
+                            <select class="form-select " aria-label="Default select example" name="com_type" id="validationCustom02"  >
+                                {% for category in comdata  %}
+        <option value="{{ category.id }}">{{ category.name }}</option>
+      {% endfor %}
+    </select><div class="valid-feedback">
                                 Looks good!
                             </div>
                         </div>

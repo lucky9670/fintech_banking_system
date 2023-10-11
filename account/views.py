@@ -4,14 +4,17 @@ from .models import Account, UserProfile, Role, Scheme, APIManager, Provider, Co
 from django.contrib import auth
 from lib.settings import password_check
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 
 from django.core.files.storage import FileSystemStorage
 # Create your views here.
 
 # Create your views here.
+@login_required(login_url='login')
 def index(request):
     return render(request,'index.html')
 
+@login_required(login_url='login')
 def superDistibuter(request):
     return render(request,'super_distibuter.html')
 
@@ -62,10 +65,12 @@ def login(request):
             return render(request, 'login.html', {'error_message': 'Invalid login credentials'})
     return render(request,"login.html")
 
+@login_required(login_url='login')
 def logout(request):
     auth.logout(request)
     return redirect(index)
 
+@login_required(login_url='login')
 def changePassword(request):
     if request.method == "POST":
         old_password = request.POST.get("old_password")
@@ -97,12 +102,15 @@ def changePassword(request):
     return render(request,"login.html")
 
 ##  Scheme Manager
+@login_required(login_url='login')
 def SchemeManager(request):
     message= ""
     mtype=""
     scheme_data = Scheme.objects.all()
     provider_data = CommissionType.objects.all()
     return render(request, "scheme_manager.html", {"data" : scheme_data,"pdata":provider_data, "message": message, "mtype":mtype})
+
+@login_required(login_url='login')
 def AddScheme(request):
     message= ""
     mtype=""
@@ -138,6 +146,8 @@ def AddScheme(request):
                 message= "Something went wrong.."
                 mtype="failed"
     return JsonResponse({'mtype':mtype, 'message':message})
+
+@login_required(login_url='login')
 def DeleteScheme(request):
     message= ""
     mtype=""
@@ -154,6 +164,8 @@ def DeleteScheme(request):
     return JsonResponse({'mtype':mtype, 'message':message})
         # scheme_data = Scheme.objects.all()
         # return render(request, "scheme_manager.html", {"data" : scheme_data, "message": message, "mtype":mtype})
+
+@login_required(login_url='login')
 def editScheme(request):
     message= ""
     mtype=""
@@ -171,12 +183,14 @@ def editScheme(request):
 
 
 ## Commission type 
-
+@login_required(login_url='login')
 def CommissionTypeManager(request):
     message= ""
     mtype=""
     scheme_data = CommissionType.objects.all()
     return render(request, "commission_type_manager.html", {"data" : scheme_data, "message": message, "mtype":mtype})
+
+@login_required(login_url='login')
 def AddCommissionType(request):
     message= ""
     mtype=""
@@ -212,6 +226,8 @@ def AddCommissionType(request):
                 message= "Something went wrong.."
                 mtype="failed"
     return JsonResponse({'mtype':mtype, 'message':message})
+
+@login_required(login_url='login')
 def DeleteCommssionType(request):
     message= ""
     mtype=""
@@ -228,6 +244,8 @@ def DeleteCommssionType(request):
     return JsonResponse({'mtype':mtype, 'message':message})
         # scheme_data = Scheme.objects.all()
         # return render(request, "scheme_manager.html", {"data" : scheme_data, "message": message, "mtype":mtype})
+
+@login_required(login_url='login')
 def editCommissionType(request):
     message= ""
     mtype=""
@@ -246,7 +264,7 @@ def editCommissionType(request):
 
 
 ## API Manager
-
+@login_required(login_url='login')
 def apiManager(request):
     message= ""
     mtype=""
@@ -273,6 +291,7 @@ def apiManager(request):
     return render(request, "scheme_manager.html", {"data" : scheme_data, "message": message, "mtype":mtype})
 
 # Role Manager
+@login_required(login_url='login')
 def roleManager(request):
     message= ""
     mtype=""
@@ -288,6 +307,7 @@ def roleManager(request):
     role_data = Role.objects.all()
     return render(request, "role.html", {"data" : role_data, "message": message, "mtype":mtype})
 
+@login_required(login_url='login')
 def company(request):
     message= ""
     mtype=""
@@ -317,7 +337,7 @@ def company(request):
     api_data = APIManager.objects.all()
     return render(request, "api.html", {"data" : api_data, "message": message, "mtype":mtype})
 
-
+@login_required(login_url='login')
 def ProviderManager(request):
     message= ""
     mtype=""
@@ -346,21 +366,25 @@ def ProviderManager(request):
     scheme_data = Provider.objects.all()
     return render(request, "provider.html", {"data" : scheme_data,"apidata":api_data, "message": message, "mtype":mtype})
 
+@login_required(login_url='login')
 def whitelabel(request):
     role = Role.objects.get(name="White Label")
     data = Account.objects.filter(role = role)
     return render(request, "whitelabel.html", {"data" : data, "name" : "White Label"})
 
+@login_required(login_url='login')
 def superDistributer(request):
     role = Role.objects.get(name="Super Distributer")
     data = Account.objects.filter(role = role)
     return render(request, "whitelabel.html", {"data" : data, "name" : "Super Distributer"})
 
+@login_required(login_url='login')
 def Distributer(request):
     role = Role.objects.get(name="Distributer")
     data = Account.objects.filter(role = role)
     return render(request, "whitelabel.html", {"data" : data, "name" : "Distributer"})
 
+@login_required(login_url='login')
 def Retailer(request):
     role = Role.objects.get(name="Retailer")
     data = Account.objects.filter(role = role)

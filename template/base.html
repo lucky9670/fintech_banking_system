@@ -24,7 +24,8 @@
 
     <!--Swiper slider css-->
     <link href="{% static 'assets/libs/swiper/swiper-bundle.min.css' %}" rel="stylesheet" type="text/css" />
-
+    <!--Font awesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Layout config Js -->
     <script src="{% static 'assets/js/layout.js' %}"></script>
     <!-- Bootstrap Css -->
@@ -895,6 +896,9 @@
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarDashboards">
                         <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{% url 'dashboard'%}" class="nav-link" data-key="t-analytics"> dashboard </a>
+                            </li>
                             <li class="nav-item">
                                 <a href="dashboard-analytics.html" class="nav-link" data-key="t-analytics"> Analytics </a>
                             </li>

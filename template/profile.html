@@ -13,14 +13,18 @@
             <div class="row g-4">
                 <div class="col-auto">
                     <div class="avatar-lg">
+                        {% if profile_data.profile_pic %}
+                        <img src="{{ profile_data.profile_pic.url }}" alt="user-img" class="img-thumbnail rounded-circle" />
+                        {% else %}
                         <img src="{% static 'assets/images/users/avatar-1.jpg' %}" alt="user-img" class="img-thumbnail rounded-circle" />
+                        {% endif %}
                     </div>
                 </div>
                 <!--end col-->
                 <div class="col">
                     <div class="p-2">
-                        <h3 class="text-white mb-1">Anna Adame</h3>
-                        <p class="text-white-75">Owner & Founder</p>
+                        <h3 class="text-white mb-1">{{user.name}}</h3>
+                        <p class="text-white-75">{{user.role.name}}</p>
                         <div class="hstack text-white-50 gap-1">
                             <div class="me-2"><i class="ri-map-pin-user-line me-1 text-white-75 fs-16 align-middle"></i>California, United States</div>
                             <div>
@@ -102,27 +106,21 @@
                     <div class="tab-content pt-4 text-muted">
                         <div class="tab-pane active" id="overview-tab" role="tabpanel">
                             <div class="row">
-                                
                                 <!--end col-->
                                 <div class="col-xxl-12">
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="modal-header" style="background-color:#405189;height: 60px">
-                                                <h5 class="modal-title" id="myLargeModalLabel"
-                                                    style="color: white;">Personal Information</h5>
-                                               
+                                                <h5 class="modal-title" id="myLargeModalLabel" style="color: white;">Personal Information</h5>
                                             </div>
+                                            <input type="hidden" name="id" id="id" value="{{profile_data.user.id}}">
                                             <div class="row">
                                                 <div class="col-6 col-md-4">
                                                     <div class="d-flex mt-4">
-                                                       
                                                         <div class="flex-grow-1 overflow-hidden">
                                                             <div class="mb-3">
-                                                                <label for="lastNameinput" class="form-label"> Name
-                                                                </label>
-                                                                <input type="text" class="form-control" value="{{data.name}}" placeholder="Enter your Name" id="lastNameinput"
-                                                                style="border: none;border-bottom: 1px solid #405189;border-radius: 0px;"
-                                                                >
+                                                                <label for="lastNameinput" class="form-label">Name</label>
+                                                                <input type="text" class="form-control" id="name" value="{{profile_data.user.name}}" placeholder="Enter your Name" style="border: none;border-bottom: 1px solid #405189;border-radius: 0px;">
                                                             </div>
                                                        </div>
                                                     </div>
@@ -130,32 +128,22 @@
                                                 <!--end col-->
                                                 <div class="col-6 col-md-4">
                                                     <div class="d-flex mt-4">
-                                                        <div class="flex-shrink-0 avatar-xs align-self-center me-3">
-                                                            
-                                                        </div>
+                                                        <div class="flex-shrink-0 avatar-xs align-self-center me-3"></div>
                                                         <div class="flex-grow-1 overflow-hidden">
                                                             <div class="mb-3">
-                                                                <label for="lastNameinput" class="form-label">Mobile
-                                                                </label>
-                                                                <input type="number" class="form-control" value="{{data.phone}}" placeholder="Enter your Mobile" id="lastNameinput"
-                                                                style="border: none;border-bottom: 1px solid #405189;border-radius: 0px;"
-                                                                >
+                                                                <label for="lastNameinput" class="form-label">Mobile</label>
+                                                                <input type="text" name="mobile" class="form-control" value="{{profile_data.user.phone}}" placeholder="Enter your Mobile" style="border: none;border-bottom: 1px solid #405189;border-radius: 0px;" readonly>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-6 col-md-4">
                                                     <div class="d-flex mt-4">
-                                                        <div class="flex-shrink-0 avatar-xs align-self-center me-3">
-                                                            
-                                                        </div>
+                                                        <div class="flex-shrink-0 avatar-xs align-self-center me-3"></div>
                                                         <div class="flex-grow-1 overflow-hidden">
                                                             <div class="mb-3">
-                                                                <label for="lastNameinput" class="form-label"> Email
-                                                                </label>
-                                                                <input type="email" class="form-control" value="{{data.email}}" placeholder="Enter your Email" id="lastNameinput"
-                                                                style="border: none;border-bottom: 1px solid #405189;border-radius: 0px;"
-                                                                >
+                                                                <label for="lastNameinput" class="form-label"> Email</label>
+                                                                <input type="email" name="email" class="form-control" value="{{profile_data.user.email}}" placeholder="Enter your Email" style="border: none;border-bottom: 1px solid #405189;border-radius: 0px;" readonly>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -165,14 +153,10 @@
                                             <div class="row">
                                                 <div class="col-6 col-md-4">
                                                     <div class="d-flex mt-4">
-                                                       
                                                         <div class="flex-grow-1 overflow-hidden">
                                                             <div class="mb-3">
-                                                                <label for="lastNameinput" class="form-label">State
-                                                                </label>
-                                                                <input type="text" class="form-control" placeholder="Enter your State" id="lastNameinput"
-                                                                style="border: none;border-bottom: 1px solid #405189;border-radius: 0px;"
-                                                                >
+                                                                <label for="lastNameinput" class="form-label">State</label>
+                                                                <input type="text" id="state" class="form-control" placeholder="Enter your State" value="{{profile_data.state}}" style="border: none;border-bottom: 1px solid #405189;border-radius: 0px;">
                                                             </div>
                                                        </div>
                                                     </div>
@@ -180,67 +164,42 @@
                                                 <!--end col-->
                                                 <div class="col-6 col-md-4">
                                                     <div class="d-flex mt-4">
-                                                        <div class="flex-shrink-0 avatar-xs align-self-center me-3">
-                                                            
-                                                        </div>
+                                                        <div class="flex-shrink-0 avatar-xs align-self-center me-3"></div>
                                                         <div class="flex-grow-1 overflow-hidden">
                                                             <div class="mb-3">
-                                                                <label for="lastNameinput" class="form-label"> City
-                                                                </label>
-                                                                <input type="number" class="form-control" placeholder="Enter your City" id="lastNameinput"
-                                                                style="border: none;border-bottom: 1px solid #405189;border-radius: 0px;"
-                                                                >
+                                                                <label for="lastNameinput" class="form-label">City</label>
+                                                                <input type="text" id="city" class="form-control" placeholder="Enter your City" value="{{profile_data.city}}" style="border: none;border-bottom: 1px solid #405189;border-radius: 0px;" >
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-6 col-md-4">
                                                     <div class="d-flex mt-4">
-                                                        <div class="flex-shrink-0 avatar-xs align-self-center me-3">
-                                                            
-                                                        </div>
+                                                        <div class="flex-shrink-0 avatar-xs align-self-center me-3"></div>
                                                         <div class="flex-grow-1 overflow-hidden">
                                                             <div class="mb-3">
-                                                                <label for="lastNameinput" class="form-label"> Pincode
-                                                                </label>
-                                                                <input type="email" class="form-control" placeholder="Enter your Pincode" id="lastNameinput"
-                                                                style="border: none;border-bottom: 1px solid #405189;border-radius: 0px;"
-                                                                >
+                                                                <label for="lastNameinput" class="form-label">Pincode</label>
+                                                                <input type="text" id="pin_code" class="form-control" placeholder="Enter your Pincode" value="{{profile_data.pin_code}}" style="border: none;border-bottom: 1px solid #405189;border-radius: 0px;">
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <!--end col-->
-                                            </div>
-
-<br>
+                                            </div><br>
                                             <div class="row">
-                                                
                                                 <div class="col-12 col-md-12">
                                                     <div class="mb-3">
-                                                        <label for="lastNameinput" class="form-label"> Address
-                                                            </label>
-                                                            <textarea class="form-control" id="VertimeassageInput" rows="4" placeholder="Enter Address"
-                                                            style="border: none;border-bottom: 1px solid #405189;border-radius: 0px;"
-        
-                                                            ></textarea>
-        
+                                                        <label for="lastNameinput" class="form-label">Address</label>
+                                                        <textarea class="form-control" id="address" rows="4" placeholder="Enter Address" style="border: none;border-bottom: 1px solid #405189;border-radius: 0px;">{{profile_data.address}}</textarea>
                                                     </div>
                                                 </div>
-                                                <!--end col-->
                                             </div>
                                             <hr>
-                                            <button type="button" class="btn"
-                            style="background-color: #405189;color: white;float: right;">UPDATE PROFILE</button>
-
+                                            <button type="button" class="btn" style="background-color: #405189;color: white;float: right;" id="personal_btn">UPDATE PROFILE</button>
                                             <!--end row-->
                                         </div>
                                         <!--end card-body-->
                                     </div><!-- end card -->
-
-                                  
-
-                                   
                                 </div>
                                 <!--end col-->
                             </div>
@@ -250,21 +209,15 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="modal-header" style="background-color:#405189;height: 60px">
-                                        <h5 class="modal-title" id="myLargeModalLabel"
-                                            style="color: white;">Kyc Data</h5>
-                                       
+                                        <h5 class="modal-title" id="myLargeModalLabel" style="color: white;">Kyc Data</h5>  
                                     </div>
                                     <div class="row">
                                         <div class="col-6 col-md-4">
                                             <div class="d-flex mt-4">
-                                               
                                                 <div class="flex-grow-1 overflow-hidden">
                                                     <div class="mb-3">
-                                                        <label for="lastNameinput" class="form-label"> Shop Name
-                                                        </label>
-                                                        <input type="text" class="form-control" placeholder="Enter Vlaue" id="lastNameinput"
-                                                        style="border: none;border-bottom: 1px solid #405189;border-radius: 0px;"
-                                                        >
+                                                        <label for="lastNameinput" class="form-label">Shop Name </label>
+                                                        <input type="text" id="shop_name" class="form-control" value="{{profile_data.shop_name}}" placeholder="Enter Vlaue" id="lastNameinput" style="border: none;border-bottom: 1px solid #405189;border-radius: 0px;">
                                                     </div>
                                                </div>
                                             </div>
@@ -272,32 +225,22 @@
                                         <!--end col-->
                                         <div class="col-6 col-md-4">
                                             <div class="d-flex mt-4">
-                                                <div class="flex-shrink-0 avatar-xs align-self-center me-3">
-                                                    
-                                                </div>
+                                                <div class="flex-shrink-0 avatar-xs align-self-center me-3"></div>
                                                 <div class="flex-grow-1 overflow-hidden">
                                                     <div class="mb-3">
-                                                        <label for="lastNameinput" class="form-label">Gst Number
-                                                        </label>
-                                                        <input type="number" class="form-control" placeholder="Enter Value" id="lastNameinput"
-                                                        style="border: none;border-bottom: 1px solid #405189;border-radius: 0px;"
-                                                        >
+                                                        <label for="lastNameinput" class="form-label">Gst Number</label>
+                                                        <input type="text" id="gstin" class="form-control" value="{{profile_data.gstin}}" placeholder="Enter Value" id="lastNameinput" style="border: none;border-bottom: 1px solid #405189;border-radius: 0px;">
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-6 col-md-4">
                                             <div class="d-flex mt-4">
-                                                <div class="flex-shrink-0 avatar-xs align-self-center me-3">
-                                                    
-                                                </div>
+                                                <div class="flex-shrink-0 avatar-xs align-self-center me-3"> </div>
                                                 <div class="flex-grow-1 overflow-hidden">
                                                     <div class="mb-3">
-                                                        <label for="lastNameinput" class="form-label"> Pancard Number
-                                                        </label>
-                                                        <input type="email" class="form-control" placeholder="Enter Value" id="lastNameinput"
-                                                        style="border: none;border-bottom: 1px solid #405189;border-radius: 0px;"
-                                                        >
+                                                        <label for="lastNameinput" class="form-label"> Pancard Number </label>
+                                                        <input type="text" id="pan_card" class="form-control" value="{{profile_data.pan_card}}" placeholder="Enter Value" id="lastNameinput" style="border: none;border-bottom: 1px solid #405189;border-radius: 0px;">
                                                     </div>
                                                 </div>
                                             </div>
@@ -307,31 +250,19 @@
                                     <div class="row">
                                         <div class="col-6 col-md-4">
                                             <div class="d-flex mt-4">
-                                               
                                                 <div class="flex-grow-1 overflow-hidden">
                                                     <div class="mb-3">
-                                                        <label for="lastNameinput" class="form-label">Adhaarcard Number
-                                                        </label>
-                                                        <input type="text" class="form-control" placeholder="Enter Value" id="lastNameinput"
-                                                        style="border: none;border-bottom: 1px solid #405189;border-radius: 0px;"
-                                                        >
+                                                        <label for="lastNameinput" class="form-label">Adhaar Card Number</label>
+                                                        <input type="text" id="aadhar_card" class="form-control" value="{{profile_data.aadhar_card}}" placeholder="Enter Value" id="lastNameinput" style="border: none;border-bottom: 1px solid #405189;border-radius: 0px;">
                                                     </div>
                                                </div>
                                             </div>
                                         </div>
                                         <!--end col-->
-                                       
-                                        
                                         <!--end col-->
-                                    </div>
-
-<br>
-                                    
+                                    </div><br>
                                     <hr>
-                                    <button type="button" class="btn"
-                    style="background-color: #405189;color: white;float: right;">UPDATE PROFILE</button>
-
-                                    <!--end row-->
+                                    <button type="button" class="btn" id="kyc_update" style="background-color: #405189;color: white;float: right;">KYC UPDATE</button>
                                 </div>
                                 <!--end card-body-->
                             </div>
@@ -344,9 +275,7 @@
                                 {% csrf_token %}
                                 <div class="card-body">
                                     <div class="modal-header" style="background-color:#405189;height: 60px">
-                                        <h5 class="modal-title" id="myLargeModalLabel"
-                                            style="color: white;">Password Reset</h5>
-                                       
+                                        <h5 class="modal-title" id="myLargeModalLabel" style="color: white;">Password Reset</h5> 
                                     </div>
                                     <div class="row">
                                         <div class="col-6 col-md-4">
@@ -356,24 +285,15 @@
                                                     <div class="mb-3">
                                                         <label for="lastNameinput" class="form-label"> New Password
                                                         </label>
-                                                        <input type="password" class="form-control" placeholder="Enter Vlaue" id="password" name="password"
-                                                        style="border: none;border-bottom: 1px solid #405189;border-radius: 0px;"
-                                                        >
+                                                        <input type="password" class="form-control" placeholder="Enter Vlaue" id="password" name="password" style="border: none;border-bottom: 1px solid #405189;border-radius: 0px;">
                                                     </div>
                                                </div>
                                             </div>
                                         </div>
                                         <!--end col-->
-                                       
-                                       
-                                    </div>
-                                   
-
-<br>
-                                    
+                                    </div><br>
                                     <hr>
-                                    <button type="button" class="btn" id="change-password"
-                    style="background-color: #405189;color: white;float: right;">Password Reset</button>
+                                    <button type="button" class="btn" id="change-password" style="background-color: #405189;color: white;float: right;">Password Reset</button>
 
                                     <!--end row-->
                                 </div>
@@ -387,21 +307,15 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="modal-header" style="background-color:#405189;height: 60px">
-                                        <h5 class="modal-title" id="myLargeModalLabel"
-                                            style="color: white;">Pin Reset</h5>
-                                       
+                                        <h5 class="modal-title" id="myLargeModalLabel" style="color: white;">Pin Reset</h5> 
                                     </div>
                                     <div class="row">
                                         <div class="col-6 col-md-4">
                                             <div class="d-flex mt-4">
-                                               
                                                 <div class="flex-grow-1 overflow-hidden">
                                                     <div class="mb-3">
-                                                        <label for="lastNameinput" class="form-label">New Pin
-                                                        </label>
-                                                        <input type="text" class="form-control" placeholder="Enter your New Pin" id="new-pin"
-                                                        style="border: none;border-bottom: 1px solid #405189;border-radius: 0px;"
-                                                        >
+                                                        <label for="lastNameinput" class="form-label">New Pin </label>
+                                                        <input type="text" class="form-control" placeholder="Enter your New Pin" id="new-pin" style="border: none;border-bottom: 1px solid #405189;border-radius: 0px;">
                                                     </div>
                                                </div>
                                             </div>
@@ -409,72 +323,48 @@
                                         <!--end col-->
                                         <div class="col-6 col-md-4">
                                             <div class="d-flex mt-4">
-                                                <div class="flex-shrink-0 avatar-xs align-self-center me-3">
-                                                    
-                                                </div>
+                                                <div class="flex-shrink-0 avatar-xs align-self-center me-3"></div>
                                                 <div class="flex-grow-1 overflow-hidden">
                                                     <div class="mb-3">
-                                                        <label for="lastNameinput" class="form-label">Confirmed Pin
-                                                        </label>
-                                                        <input type="number" class="form-control" placeholder="Enter your Confirmed Pin" id="confirmd-pin"
-                                                        style="border: none;border-bottom: 1px solid #405189;border-radius: 0px;"
-                                                        >
+                                                        <label for="lastNameinput" class="form-label">Confirmed Pin </label>
+                                                        <input type="number" class="form-control" placeholder="Enter your Confirmed Pin" id="confirmd-pin" style="border: none;border-bottom: 1px solid #405189;border-radius: 0px;">
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-6 col-md-4">
                                             <div class="d-flex mt-4">
-                                                <div class="flex-shrink-0 avatar-xs align-self-center me-3">
-                                                    
-                                                </div>
+                                                <div class="flex-shrink-0 avatar-xs align-self-center me-3"></div>
                                                 <div class="flex-grow-1 overflow-hidden">
                                                     <div class="mb-3">
-                                                        <label for="lastNameinput" class="form-label"> Otp
-                                                        </label>
-                                                        <input type="text" class="form-control" placeholder="Enter your Otp" id="otp-pin"
-                                                        style="border: none;border-bottom: 1px solid #405189;border-radius: 0px;"
-                                                        >
+                                                        <label for="lastNameinput" class="form-label"> Otp </label>
+                                                        <input type="text" class="form-control" placeholder="Enter your Otp" id="otp-pin" style="border: none;border-bottom: 1px solid #405189;border-radius: 0px;">
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <!--end col-->
-                                    </div>
-                                   
-<br>
-                                    
+                                    </div><br>
                                     <hr>
-                                    <button type="button" class="btn" id="pin-reset"
-                    style="background-color: #405189;color: white;float: right;">Pin Reset</button>
+                                    <button type="button" class="btn" id="pin-reset" style="background-color: #405189;color: white;float: right;">Pin Reset</button>
 
                                     <!--end row-->
                                 </div>
                             </div>
                         </div>
-
-
-
-
                         <div class="tab-pane fade" id="bank" role="tabpanel">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="modal-header" style="background-color:#405189;height: 60px">
-                                        <h5 class="modal-title" id="myLargeModalLabel"
-                                            style="color: white;">Bank Details</h5>
-                                       
+                                        <h5 class="modal-title" id="myLargeModalLabel"  style="color: white;">Bank Details</h5>
                                     </div>
                                     <div class="row">
                                         <div class="col-6 col-md-4">
                                             <div class="d-flex mt-4">
-                                               
                                                 <div class="flex-grow-1 overflow-hidden">
                                                     <div class="mb-3">
-                                                        <label for="lastNameinput" class="form-label">Account Number
-                                                        </label>
-                                                        <input type="text" class="form-control" placeholder="Enter Value" id="lastNameinput"
-                                                        style="border: none;border-bottom: 1px solid #405189;border-radius: 0px;"
-                                                        >
+                                                        <label for="lastNameinput" class="form-label">Account Number</label>
+                                                        <input type="text" id="account_number" value="{{profile_data.account_number}}" class="form-control" placeholder="Enter Value" id="lastNameinput" style="border: none;border-bottom: 1px solid #405189;border-radius: 0px;">
                                                     </div>
                                                </div>
                                             </div>
@@ -482,16 +372,11 @@
                                         <!--end col-->
                                         <div class="col-6 col-md-4">
                                             <div class="d-flex mt-4">
-                                                <div class="flex-shrink-0 avatar-xs align-self-center me-3">
-                                                    
-                                                </div>
+                                                <div class="flex-shrink-0 avatar-xs align-self-center me-3"></div>
                                                 <div class="flex-grow-1 overflow-hidden">
                                                     <div class="mb-3">
-                                                        <label for="lastNameinput" class="form-label">Bank Name
-                                                        </label>
-                                                        <input type="number" class="form-control" placeholder="Enter Value" id="lastNameinput"
-                                                        style="border: none;border-bottom: 1px solid #405189;border-radius: 0px;"
-                                                        >
+                                                        <label for="lastNameinput" class="form-label">Bank Name </label>
+                                                        <input type="text" id="bank_name" value="{{profile_data.bank_name}}" class="form-control" placeholder="Enter Value" id="lastNameinput" style="border: none;border-bottom: 1px solid #405189;border-radius: 0px;">
                                                     </div>
                                                 </div>
                                             </div>
@@ -503,24 +388,16 @@
                                                 </div>
                                                 <div class="flex-grow-1 overflow-hidden">
                                                     <div class="mb-3">
-                                                        <label for="lastNameinput" class="form-label"> Ifsc Code
-                                                        </label>
-                                                        <input type="text" class="form-control" placeholder="Enter Value" id="lastNameinput"
-                                                        style="border: none;border-bottom: 1px solid #405189;border-radius: 0px;"
-                                                        >
+                                                        <label for="lastNameinput" class="form-label"> Ifsc Code</label>
+                                                        <input type="text" id="bank_ifsc" value="{{profile_data.bank_ifsc}}" class="form-control" placeholder="Enter Value" id="lastNameinput" style="border: none;border-bottom: 1px solid #405189;border-radius: 0px;">
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <!--end col-->
-                                    </div>
-                                   
-<br>
-                                    
+                                    </div><br>
                                     <hr>
-                                    <button type="button" class="btn"
-                    style="background-color: #405189;color: white;float: right;">CHANGE</button>
-
+                                    <button type="button" class="btn" id="bank_update" style="background-color: #405189;color: white;float: right;">CHANGE</button>
                                     <!--end row-->
                                 </div>
                             </div>
@@ -531,9 +408,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="modal-header" style="background-color:#405189;height: 60px">
-                                        <h5 class="modal-title" id="myLargeModalLabel"
-                                            style="color: white;">Role Manager</h5>
-                                       
+                                        <h5 class="modal-title" id="myLargeModalLabel" style="color: white;">Role Manager</h5> 
                                     </div>
                                     <div class="row">
                                         <div class="col-6 col-md-4">
@@ -542,17 +417,15 @@
                                                 <div class="flex-grow-1 overflow-hidden">
                                                     <div class="mb-3">
                                                         <label for="firstNameinput" class="form-label">Member Role</label>
-                                                        <select class="form-select sl" aria-label=".form-select-lg example"
-                                                        style="width: 100%;">
-                                                        <option value="">Select Role</option>
-                                                        <option value="percent">Master Distributor</option>
-                                                        <option value="flat">Distributor</option>
-                                                        <option value="flat">Retailer</option>
-                                                        <option value="flat">Admin</option>
-                                                        <option value="flat">MIS</option>
-                                                        <option value="flat">Sub Admin</option>
-                                                    
-                                                    </select>
+                                                        <select class="form-select sl" aria-label=".form-select-lg example" style="width: 100%;">
+                                                            <option value="">Select Role</option>
+                                                            <option value="percent">Master Distributor</option>
+                                                            <option value="flat">Distributor</option>
+                                                            <option value="flat">Retailer</option>
+                                                            <option value="flat">Admin</option>
+                                                            <option value="flat">MIS</option>
+                                                            <option value="flat">Sub Admin</option>
+                                                        </select>
                                                     </div>
 
                                                </div>
@@ -561,14 +434,9 @@
                                         <!--end col-->
                                        
                                        
-                                    </div>
-                                   
-
-<br>
-                                    
+                                    </div><br>
                                     <hr>
-                                    <button type="button" class="btn"
-                    style="background-color: #405189;color: white;float: right;">CHANGE</button>
+                                    <button type="button" class="btn" style="background-color: #405189;color: white;float: right;">CHANGE</button>
 
                                     <!--end row-->
                                 </div>
@@ -581,9 +449,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="modal-header" style="background-color:#405189;height: 60px">
-                                        <h5 class="modal-title" id="myLargeModalLabel"
-                                            style="color: white;">Change Mapping</h5>
-                                       
+                                        <h5 class="modal-title" id="myLargeModalLabel"  style="color: white;">Change Mapping</h5>
                                     </div>
                                     <div class="row">
                                         <div class="col-6 col-md-4">
@@ -592,36 +458,26 @@
                                                 <div class="flex-grow-1 overflow-hidden">
                                                     <div class="mb-3">
                                                         <label for="firstNameinput" class="form-label">Parent Member</label>
-                                                        <select class="form-select sl" aria-label=".form-select-lg example"
-                                                        style="width: 100%;">
-                                                        <option value="">Select Member</option>
-                                                        <option value="1">Admin (6307060920) (Super Admin)</option>
-                                                        <option value="40">Dinesh Gosvami (6398401230) (Master Distributor)</option>
-                                                        <option value="46">OJASAV SHARMA (9528163551) (Distributor)</option>
-                                                        <option value="48">Mohd Wasif (8979929899) (Master Distributor)</option>
-                                                        <option value="49">DINESH (6396211522) (Distributor)</option>
-                                                        <option value="57">Santosh Prasad (9122008712) (Distributor)</option>
-                                                        <option value="62">RAVI KUMAR SHARMA (7417304060) (Distributor)</option>
-                                                        <option value="77">Subham (7979912161) (MIS)</option>
-                                                    
-                                                    </select>
+                                                        <select class="form-select sl" aria-label=".form-select-lg example" style="width: 100%;">
+                                                            <option value="">Select Member</option>
+                                                            <option value="1">Admin (6307060920) (Super Admin)</option>
+                                                            <option value="40">Dinesh Gosvami (6398401230) (Master Distributor)</option>
+                                                            <option value="46">OJASAV SHARMA (9528163551) (Distributor)</option>
+                                                            <option value="48">Mohd Wasif (8979929899) (Master Distributor)</option>
+                                                            <option value="49">DINESH (6396211522) (Distributor)</option>
+                                                            <option value="57">Santosh Prasad (9122008712) (Distributor)</option>
+                                                            <option value="62">RAVI KUMAR SHARMA (7417304060) (Distributor)</option>
+                                                            <option value="77">Subham (7979912161) (MIS)</option>
+                                                        </select>
                                                     </div>
 
                                                </div>
                                             </div>
                                         </div>
                                         <!--end col-->
-                                       
-                                       
-                                    </div>
-                                   
-
-<br>
-                                    
+                                    </div><br>
                                     <hr>
-                                    <button type="button" class="btn"
-                    style="background-color: #405189;color: white;float: right;">CHANGE</button>
-
+                                    <button type="button" class="btn" style="background-color: #405189;color: white;float: right;">CHANGE</button>
                                     <!--end row-->
                                 </div>
                                 <!--end card-body-->
@@ -687,6 +543,143 @@ $("#pin-reset").click(function(){
     console.log("clicked", otppin, cpin, pin);
 });
 
+// Personal Profile Update
+$("#personal_btn").click(function(){
+    let id = $("#id").val();
+    let action = "profile_update";
+    let name = $("#name").val();
+    let state = $("#state").val();
+    let city = $("#city").val();
+    let pin_code = $("#pin_code").val();
+    let address = $("#address").val();
+    console.log("Clicked On profile update");
+    console.log(id, name, state, city, pin_code, address, action)
+    mydata = {
+        action:action,
+        id:id,
+        name:name,
+        state:state,
+        city:city,
+        pin_code:pin_code,
+        address:address,
+        csrfmiddlewaretoken : '{{ csrf_token }}'
+    }
+    $.ajax({
+        url:"{% url 'profile_wl_update' %}",
+        method:"POST", 
+        data:mydata, 
+        success:function(data){
+            if(data.mtype == 'success'){
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: data.message,
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
+            }
+            else{
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'failed',
+                    title: data.message,
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
+            }
+        }
+    });
+});
 
+
+// KYC Data Update
+$("#kyc_update").click(function(){
+    let id = $("#id").val();
+    let action = "kyc_update";
+    let shop_name = $("#shop_name").val();
+    let gstin = $("#gstin").val();
+    let pan_card = $("#pan_card").val();
+    let aadhar_card = $("#aadhar_card").val();
+    console.log("Clicked On KYC update");
+    console.log(id, shop_name, gstin, pan_card, aadhar_card, action)
+    mydata = {
+        action:action,
+        id:id,
+        shop_name:shop_name,
+        gstin:gstin,
+        pan_card:pan_card,
+        aadhar_card:aadhar_card,
+        csrfmiddlewaretoken : '{{ csrf_token }}'
+    }
+    $.ajax({
+        url:"{% url 'profile_wl_update' %}",
+        method:"POST", 
+        data:mydata, 
+        success:function(data){
+            if(data.mtype == 'success'){
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: data.message,
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
+            }
+            else{
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'failed',
+                    title: data.message,
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
+            }
+        }
+    });
+});
+
+// Bank Data Update
+$("#bank_update").click(function(){
+    let id = $("#id").val();
+    let action = "bank_update";
+    let bank_ifsc = $("#bank_ifsc").val();
+    let bank_name = $("#bank_name").val();
+    let account_number = $("#account_number").val();
+    console.log("Clicked On Bank update");
+    console.log(id, bank_ifsc, bank_name, account_number, action)
+    mydata = {
+        action:action,
+        id:id,
+        bank_ifsc:bank_ifsc,
+        bank_name:bank_name,
+        account_number:account_number,
+        csrfmiddlewaretoken : '{{ csrf_token }}'
+    }
+    $.ajax({
+        url:"{% url 'profile_wl_update' %}",
+        method:"POST", 
+        data:mydata, 
+        success:function(data){
+            if(data.mtype == 'success'){
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: data.message,
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
+            }
+            else{
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'failed',
+                    title: data.message,
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
+            }
+        }
+    });
+});
 </script>
 {% endblock %}

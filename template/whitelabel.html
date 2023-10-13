@@ -62,44 +62,14 @@
 
                                                 <div class="dropdown-menu" style="padding: 10px;">
                                                     <span style="padding-left: 10px;font-size:12px;">Action</span>
-                                                    <a class="dropdown-item" href="#" style="font-size: 14px;" data-bs-toggle="modal" data-bs-target=".bs-example-modal-lg">
-                                                        <i class="bx bxs-wallet-alt" style="font-size: 18px;"></i>
-
-                                                        &nbsp;&nbsp; Fund Transfer
-                                                        /Return
-                                                        <!-- <span
-                                                            style="padding-left: 10px;font-size:12px;">Commission</span> -->
-
-                                                        <a class="dropdown-item" href="#" style="font-size: 14px;"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target=".bs-example-modal-xl">
-                                                            <i class="bx bxs-wallet-alt"
-                                                                style="font-size: 18px;"></i>
-
-                                                            &nbsp;&nbsp;
-                                                            Scheme
-                                                        </a>
-                                                        <span
-                                                            style="padding-left: 10px;font-size:12px;">Setting</span>
-
-                                                        <a class="dropdown-item" href="#" style="font-size: 14px;">
-                                                            <i class="bx bx-cog" style="font-size: 18px;"></i>
-
-                                                            &nbsp;&nbsp;Permission
-                                                        </a>
-                                                        <a class="dropdown-item" href="{% url "profile_manager" %}"
-                                                            style="font-size: 14px;"><i class="bx bxs-user"
-                                                                style="font-size: 18px;"></i>&nbsp;&nbsp;View
-                                                            Profile
-                                                        </a>
-                                                        <a class="dropdown-item" href="#" style="font-size: 14px;">
-                                                            <i class="bx bx-cog" style="font-size: 18px;"></i>
-
-                                                            &nbsp;&nbsp;Kyc Manager
-                                                        </a>
-
-                                                        <!-- <div class="dropdown-divider"></div> -->
-                                                        <!-- <a class="dropdown-item" href="#">Separated link</a> -->
+                                                    <a class="dropdown-item" href="#" style="font-size: 14px;" data-bs-toggle="modal" data-bs-target=".bs-example-modal-lg"><i class="bx bxs-wallet-alt" style="font-size: 18px;"></i>&nbsp;&nbsp; Fund Transfer/Return</a>
+                                                    <a class="dropdown-item" href="#" style="font-size: 14px;" data-bs-toggle="modal" data-bs-target=".bs-example-modal-xl"><i class="bx bxs-wallet-alt" style="font-size: 18px;"></i>&nbsp;&nbsp; Scheme</a>
+                                                    <span style="padding-left: 10px;font-size:12px;">Setting</span>
+                                                    <a class="dropdown-item" href="#" style="font-size: 14px;"> <i class="bx bx-cog" style="font-size: 18px;"></i> &nbsp;&nbsp;Permission</a>
+                                                    {% if user.role.id == 9 or user.role.id == 9 %}
+                                                    <a class="dropdown-item" href="{% url 'profile_manager' item.id %}" style="font-size: 14px;"><i class="bx bxs-user" style="font-size: 18px;"></i>&nbsp;&nbsp;View Profile</a>
+                                                    {% endif %}
+                                                    <a class="dropdown-item" href="#" style="font-size: 14px;"><i class="bx bx-cog" style="font-size: 18px;"></i>&nbsp;&nbsp;Kyc Manager</a>
                                                 </div>
                                             </div>
                                         </td>

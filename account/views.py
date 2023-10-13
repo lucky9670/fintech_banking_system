@@ -10,7 +10,11 @@ import uuid, requests
 # Create your views here.
 @login_required(login_url='login')
 def index(request):
-    return render(request,'index.html')
+    print(request.user.role.id)
+    if request.user.role.id == 3:
+        return render(request,'dashboard.html')
+    else:
+        return render(request,'index.html')
 
 @login_required(login_url='login')
 def superDistibuter(request):
@@ -450,10 +454,10 @@ def GetCommissionBySchemeAndCType(request):
     return JsonResponse({"data":cdata})           
 
 @login_required(login_url='login')
-def ProfileManager(request):
-    user = Account.objects.get(id= 2)
-    # user_profile = UserProfile.objects.get(user=user)
-    return render(request, 'profile.html', {"data":user}) 
+def ProfileManager(request, id):
+    user = Account.objects.get(id = id)
+    user_profile = UserProfile.objects.get(user=user)
+    return render(request, 'profile.html', {"profile_data":user_profile})
 
 ## change password 
 @login_required(login_url='login')
@@ -521,3 +525,53 @@ def RechargeServiceType(argument):
             return api_url
         case default:
             return "something went wrong"
+
+def profileUpdate(request):
+     if request.method == "POST":
+        action = request.POST.get("action")
+        if action == "profile_update":
+            id = request.POST.get("id")
+            name = request.POST.get("name")
+            state = request.POST.get("state")
+            city = request.POST.get("city")
+            pin_code = request.POST.get("pin_code")
+            address = request.POST.get("address")
+            user = Account.objects.get(id = int(id))
+            user.name = name
+            user.save()
+            user_profile = UserProfile.objects.get(user = user)
+            user_profile.state = state
+            user_profile.city = city
+            user_profile.pin_code = pin_code
+            user_profile.address = address
+            user_profile.save()
+            return JsonResponse({"message":"Profile Updated Sucessfully!"})
+        
+        if action == "kyc_update":
+            id = request.POST.get("id")
+            shop_name = request.POST.get("shop_name")
+            gstin = request.POST.get("gstin")
+            pan_card = request.POST.get("pan_card")
+            aadhar_card = request.POST.get("aadhar_card")
+            user = Account.objects.get(id = int(id))
+            user_profile = UserProfile.objects.get(user = user)
+            user_profile.shop_name = shop_name
+            user_profile.gstin = gstin
+            user_profile.pan_card = pan_card
+            user_profile.aadhar_card = aadhar_card
+            user_profile.save()
+            return JsonResponse({"message":"KYC Updated Sucessfully!"})
+        
+        if action == "bank_update":
+            id = request.POST.get("id")
+            bank_ifsc = request.POST.get("bank_ifsc")
+            bank_name = request.POST.get("bank_name")
+            account_number = request.POST.get("account_number")
+            user = Account.objects.get(id = int(id))
+            user_profile = UserProfile.objects.get(user = user)
+            user_profile.bank_ifsc = bank_ifsc
+            user_profile.bank_name = bank_name
+            user_profile.account_number = account_number
+            user_profile.save()
+            return JsonResponse({"message":"Bank Updated Sucessfully!"})
+        return JsonResponse({"message":"request submitted successfully"})

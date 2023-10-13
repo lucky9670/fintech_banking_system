@@ -26,8 +26,9 @@ urlpatterns = [
     path('add_commission', views.AddCommission, name = 'add_commission'),
     path('get_commission_by_scheme', views.GetCommissionBySchemeAndCType, name = 'get_commission_by_scheme'),
     path('get_provider_by_id', views.GetProviderDataBYID, name = 'get_provider_by_id'),
-    path('profile_manager', views.ProfileManager, name = 'profile_manager'),
+    path('profile_manager/<int:id>', views.ProfileManager, name = 'profile_manager'),
     path('change_password', views.ChangePassword, name = 'change_password'),
     path('mobile_recharge', views.MobileRecharge, name = 'mobile_recharge'),
     path('create_mobile_recharge', views.MobileRechargeRequest, name = 'create_mobile_recharge'),
+    path('profile_wl_update', views.profileUpdate, name = 'profile_wl_update'),
 ]
